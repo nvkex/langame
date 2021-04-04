@@ -1,0 +1,29 @@
+.screenContainer{
+    color: white;
+    height: 90vh;
+    background-color: #1d262e;
+}
+
+.objectText{
+    padding: 2px;
+    background-color: #c45858;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.optionContainer{
+    margin: auto;
+    margin-top: 4rem;
+    padding: 0 4rem;
+}
+
+.card{
+    height: 200px;
+    margin-bottom:8px;
+}
+.card img{
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.3)!important;
+    border-radius: 4px;
+    width: 100%;
+}
