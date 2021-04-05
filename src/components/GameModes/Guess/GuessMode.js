@@ -1,29 +1,11 @@
-import axios from 'axios'
 import React, { useState } from 'react'
-import { CORS_BYPASS_URL, PICSUM_URL, RANDOM_WORD_URL } from '../../../constants/URLs'
 import classes from './GuessMode.module.css'
+import { getImages, getRandomObject } from './GuessModeUtils';
 
 // MAX_STAGE will be one more than final stage
 // It is so we get the same stage number(or 0 when game ends) after doing modulus.
 const MAX_STAGE = 11;
 
-/**
- * Gets a random word using APIs and saves it in the state.
- * @param {Object} word - object containing the state values
- * @param {Function} setWord - hook to set the value of 'word' in state
- * @returns - none
- */
-const getRandomObject = (word, setWord) => {
-  axios.get(`${CORS_BYPASS_URL}${RANDOM_WORD_URL}`)
-    .then(res => {
-      setWord({ ...word, word: res.data[0].split("_").join(" ") })
-    }).catch(err => console.log(err))
-}
-
-const getImages = async (images, setImages, seed) => {
-  const list = await Array.from(Array(4), (_, i) => `${PICSUM_URL}${i + seed}`)
-  setImages({ ...images, images: list })
-}
 
 const GuessMode = () => {
 
