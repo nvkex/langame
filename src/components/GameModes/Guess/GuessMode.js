@@ -12,10 +12,10 @@ const MAX_STAGE = 11;
  * @param {Function} setWord - hook to set the value of 'word' in state
  * @returns - none
  */
-const getRandomObject = (setWord) => {
+const getRandomObject = (word, setWord) => {
   axios.get(`${CORS_BYPASS_URL}${RANDOM_WORD_URL}`)
   .then(res => {
-    setWord(res.data[0].split("_").join(" "))
+    setWord({...word, word: res.data[0].split("_").join(" ")})
   }).catch(err => console.log(err))
 }
 
@@ -31,14 +31,13 @@ const nextStage = (setStage, current) => {
 
 const GuessMode = () => {
 
-  const [word, setWord] = useState();
-  const [loading, setLoading] = useState(true);
+  const [word, setWord] = useState({loading: true, word: null});
   const [stage, setStage] = useState(1);
 
 
-  if(loading && !word){
-    getRandomObject(setWord);
-    setLoading(false);
+  if(word.loading && !word.word){
+    getRandomObject(word, setWord);
+    setWord({...word, loading: false})
   }
   
 
@@ -46,7 +45,7 @@ const GuessMode = () => {
     <div className="container">
       <div className={classes.screenContainer}>
         <h1 className="text-center display-4">Guess the object</h1>
-        <p className="text-center text-muted">If you score a perfect 100, you'll get a <strong>{word ? word : 'umm..'}</strong>!</p>
+        <p className="text-center text-muted">If you score a perfect 100, you'll get a <strong>{word.word ? word.word : 'umm..'}</strong>!</p>
         <div className={`${classes.objectText} my-4 text-center`}>
           River
         </div>
