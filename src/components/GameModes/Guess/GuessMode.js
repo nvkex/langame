@@ -1,11 +1,7 @@
 import React, { useState } from 'react'
+import { MAX_STAGE } from '../../../constants/URLs';
 import classes from './GuessMode.module.css'
 import { getImages, getRandomObject } from './GuessModeUtils';
-
-// MAX_STAGE will be one more than final stage
-// It is so we get the same stage number(or 0 when game ends) after doing modulus.
-const MAX_STAGE = 11;
-
 
 const GuessMode = () => {
 
@@ -20,8 +16,10 @@ const GuessMode = () => {
  * @returns - none
  */
   const nextStage = () => {
+    // MAX_STAGE will be one more than final stage
+    // It is so we get the same stage number(or 0 when game ends) after doing modulus.
     setStage((stage + 1) % MAX_STAGE);
-    getImages(images, setImages, stage*4+1);
+    getImages(images, setImages, stage * 4 + 1);
   }
 
   // Get random word
