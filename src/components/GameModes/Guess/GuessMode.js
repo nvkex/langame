@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { MAX_STAGE } from '../../../constants/URLs';
+import { MAX_STAGE } from '../../../constants';
 import classes from './GuessMode.module.css'
 import { getImages, getRandomObject } from './GuessModeUtils';
 

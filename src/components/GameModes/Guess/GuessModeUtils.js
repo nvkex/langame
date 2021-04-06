@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CORS_BYPASS_URL, PICSUM_URL, RANDOM_WORD_URL } from '../../../constants/URLs'
+import { CORS_BYPASS_URL, PICSUM_URL, RANDOM_WORD_URL } from '../../../constants'
 
 /**
  * Gets a random word using APIs and saves it in the state.
