@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { MAX_STAGE, TIME_LIMIT } from '../../../constants';
 import classes from './GuessMode.module.css'
-import { getImages, getRandomObject, getRandomCardQuote, getQuotes } from './GuessModeUtils';
+import { getImages, getRandomObject, getQuotes } from './GuessModeUtils';
 
 const GuessMode = () => {
 
