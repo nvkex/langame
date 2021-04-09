@@ -33,7 +33,7 @@
 
 .card:hover .cardQuote {
   bottom: 0;
-  height: 26%;
+  height: 20%;
   background-color: #1d262eb7;
 }
 
@@ -46,7 +46,7 @@
   height: 0;
   transition: 0.5s ease;
   overflow: hidden;
-  padding-top:10px;
+  padding-top:6px;
 }
 
 .status {
