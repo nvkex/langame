@@ -9,6 +9,7 @@ const GuessMode = () => {
   const [images, setImages] = useState({ loading: true, images: null });
   const [quotes, setQuotes] = useState(getQuotes(4));
   const [stage, setStage] = useState(1);
+  // eslint-disable-next-line no-unused-vars
   const [score, setScore] = useState(0);
   const [timer, setTimer] = useState(TIME_LIMIT);
   const [stopWatch, setStopWatch] = useState();
