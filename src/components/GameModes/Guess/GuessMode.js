@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
-import { MAX_STAGE } from '../../../constants';
+import React, { useEffect, useState } from 'react'
+import { MAX_STAGE, TIME_LIMIT } from '../../../constants';
 import classes from './GuessMode.module.css'
-import { getImages, getRandomObject } from './GuessModeUtils';
+import { getImages, getRandomObject, getRandomCardQuote, getQuotes } from './GuessModeUtils';
 
 const GuessMode = () => {
 
   const [word, setWord] = useState({ loading: true, word: null });
-  const [stage, setStage] = useState(1);
   const [images, setImages] = useState({ loading: true, images: null });
+  const [quotes, setQuotes] = useState(getQuotes(4));
+  const [stage, setStage] = useState(1);
+  const [score, setScore] = useState(0);
+  const [timer, setTimer] = useState(TIME_LIMIT);
+  const [stopWatch, setStopWatch] = useState();
 
   /**
  * Sets the stage to the immediate next or 0.
@@ -18,8 +22,11 @@ const GuessMode = () => {
   const nextStage = () => {
     // MAX_STAGE will be one more than final stage
     // It is so we get the same stage number(or 0 when game ends) after doing modulus.
+    clearInterval(stopWatch);
     setStage((stage + 1) % MAX_STAGE);
     getImages(images, setImages, stage * 4 + 1);
+    setTimer(TIME_LIMIT);
+    setQuotes(getQuotes(4))
   }
 
   // Get random word
@@ -33,6 +40,28 @@ const GuessMode = () => {
     getImages(images, setImages, stage);
     setImages({ ...images, loading: false });
   }
+
+  // Clear interval when the time runs out.
+  if (timer <= 0) {
+    clearInterval(stopWatch);
+  }
+
+  useEffect(() => {
+
+    // Start Timer
+    if (timer === TIME_LIMIT) {
+      let stopwatch = setInterval(() => {
+        setTimer(t => t - 1)
+      }, 1000);
+
+      setStopWatch(stopwatch);
+    }
+
+    return () => {
+
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stage])
 
 
   return (
@@ -51,6 +80,7 @@ const GuessMode = () => {
                 <div className="col-lg-3 col-md-6" key={`image_card_${i}`}>
                   <div className={`${classes.card}`}>
                     <img src={image} alt={`option_${i}`} className={`img-fluid`} />
+                    <span className={`text-center ${classes.cardQuote}`}>{quotes[i]}</span>
                   </div>
                 </div>
               ))
@@ -59,11 +89,23 @@ const GuessMode = () => {
         </div>
 
         <div className="text-center">
-          <button onClick={() => nextStage(setStage, stage)}>Next</button>
+          <button onClick={() => nextStage(setStage, stage)} className={` shadow ${classes.btn}`}>Next</button>
         </div>
 
-        <div className={`${classes.scoreBoard}`}>
+        <div className={`${classes.status}`}>
+          <div className={`${classes.stage}`} data-toggle="tooltip" data-placement="bottom" title="You're still on this stage?!">
+            {stage === MAX_STAGE - 1 ? (<span>&#127937;</span>) : (<span>&#127969;</span>)}{stage}
+          </div>
+          <div className={`${classes.timer}`} data-toggle="tooltip" data-placement="left" title="Yes, am busy. I dont have all day!">
+            &#8987;{timer}s
+          </div>
+          <div className={`${classes.scoreBoard}`} data-toggle="tooltip" data-placement="left" title="*In kratos voice*: Boy! Thats a low score.">
+            {score}&#128142;
+          </div>
+        </div>
 
+        <div className="text-center">
+          <p className="text-muted">{timer < 10 ? timer === 0? "Loser!": "Hurry Up!" : "Beware of the options! They're intimidating."}</p>
         </div>
       </div>
     </div>
