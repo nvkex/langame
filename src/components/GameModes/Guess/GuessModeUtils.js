@@ -25,3 +25,35 @@ export const getImages = async (images, setImages, seed) => {
     const list = await Array.from(Array(4), (_, i) => `${PICSUM_URL}${i + seed}`)
     setImages({ ...images, images: list })
 }
+
+/**
+ * Get a random quote
+ * @returns - a random quote from the array
+ */
+export const getRandomCardQuote = () => {
+    const q = [
+        "Pick Me!",
+        "Who made this?",
+        "I am the one!",
+        "I dont care.",
+        "Yes! Yes!",
+        "I am hungry!",
+        "Just Pick!",
+        "Not again.",
+        ":)"
+    ];
+    return q[Math.floor((Math.random() * (q.length - 1)) + 0)]
+}
+
+/**
+ * Get an array of quotes
+ * @param {Integer} MAX - Maximum amount of quotes
+ * @returns - array of quotes
+ */
+export const getQuotes = (MAX) => {
+    var arr = [];
+    for(var i=0;i<MAX;i++){
+        arr[i] = getRandomCardQuote();
+    }
+    return arr;
+}
