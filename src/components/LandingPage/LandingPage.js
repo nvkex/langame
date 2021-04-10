@@ -8,7 +8,7 @@ const LandingPage = () => {
             <div className={`container`}>
                 <div className="row">
                     <div className="col-12">
-                        <h4 className="display-4 text-center">The Langame</h4>
+                        <h4 className="display-3 text-center">The Langame</h4>
                     </div>
                 </div>
                 <div className={`row align-items-center ${classes.cardContainer}`}>
