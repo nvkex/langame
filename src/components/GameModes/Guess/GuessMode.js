@@ -90,7 +90,7 @@ const GuessMode = () => {
         </div>
 
         <div className="text-center">
-          <button onClick={() => nextStage(setStage, stage)} className={` shadow ${classes.btn}`}>Next</button>
+          <button onClick={() => nextStage(setStage, stage)} className={` ${classes.btn}`}>Next</button>
         </div>
 
         <div className={`${classes.status}`}>
