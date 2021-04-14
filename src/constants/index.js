@@ -9,3 +9,7 @@ export const TIME_LIMIT = 20;
 const WIDTH = 300;
 const HEIGHT = 200;
 export const PICSUM_URL = `https://picsum.photos/${WIDTH}/${HEIGHT}?random=`;
+
+// Backend URLs
+export const BASE_URL = '';
+export const DETECT_OBJECTS = '';
