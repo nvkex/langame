@@ -48,7 +48,6 @@ const GuessMode = () => {
   }
 
   useEffect(() => {
-
     // Start Timer
     if (timer === TIME_LIMIT) {
       let stopwatch = setInterval(() => {
@@ -59,7 +58,7 @@ const GuessMode = () => {
     }
 
     return () => {
-
+      clearInterval(stopWatch);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stage])
