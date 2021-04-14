@@ -1,5 +1,18 @@
 import axios from "axios"
-import { CORS_BYPASS_URL, PICSUM_URL, RANDOM_WORD_URL } from '../../../constants'
+import { BASE_URL, CORS_BYPASS_URL, DETECT_OBJECTS, PICSUM_URL, RANDOM_WORD_URL } from '../../../constants'
+
+/**
+ * Return detected array of objects in the selected image. 
+ * @param {String} url - image url.
+ * @param {Function} setObject - hook to set the value of object.
+ */
+export const getDetectedObjects = (url, setObject) => {
+    axios.post(`${BASE_URL}${DETECT_OBJECTS}`, { url: url })
+        .then(res => {
+            setObject({ url: url, object: res.data });
+        })
+        .catch(err => console.log(err))
+}
 
 /**
  * Gets a random word using APIs and saves it in the state.
@@ -11,7 +24,8 @@ export const getRandomObject = (word, setWord) => {
     axios.get(`${CORS_BYPASS_URL}${RANDOM_WORD_URL}`)
         .then(res => {
             setWord({ ...word, word: res.data[0].split("_").join(" ") })
-        }).catch(err => console.log(err))
+        })
+        .catch(err => console.log(err))
 }
 
 /**
@@ -52,7 +66,7 @@ export const getRandomCardQuote = () => {
  */
 export const getQuotes = (MAX) => {
     var arr = [];
-    for(var i=0;i<MAX;i++){
+    for (var i = 0; i < MAX; i++) {
         arr[i] = getRandomCardQuote();
     }
     return arr;
