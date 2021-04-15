@@ -1,0 +1,8 @@
+.devMsg{
+    font-size: 30px;
+    font-weight: 600;
+    position: fixed;
+    bottom: 4px;
+    left: 4px;
+    color:black;
+}
