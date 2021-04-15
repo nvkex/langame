@@ -10,10 +10,15 @@ const GuessMode = () => {
   const [images, setImages] = useState({ loading: true, images: null });
   const [quotes, setQuotes] = useState(getQuotes(4));
   const [stage, setStage] = useState(1);
-  // eslint-disable-next-line no-unused-vars
   const [score, setScore] = useState(0);
   const [timer, setTimer] = useState(TIME_LIMIT);
   const [stopWatch, setStopWatch] = useState();
+
+  const checkImage = (index) => {
+    if (index === keyword.index) {
+      setScore(s => s + 10);
+    }
+  }
 
   /**
  * Sets the stage to the immediate next or 0.
@@ -22,6 +27,8 @@ const GuessMode = () => {
  * @returns - none
  */
   const nextStage = () => {
+    if (stage === MAX_STAGE-1)
+      window.location.href = '/'
     // MAX_STAGE will be one more than final stage
     // It is so we get the same stage number(or 0 when game ends) after doing modulus.
     clearInterval(stopWatch);
@@ -53,6 +60,7 @@ const GuessMode = () => {
   }
 
   useEffect(() => {
+
     // Start Timer
     if (timer === TIME_LIMIT) {
       let stopwatch = setInterval(() => {
@@ -73,7 +81,13 @@ const GuessMode = () => {
     <div className="container">
       <div className={classes.screenContainer}>
         <h1 className="text-center display-4">Guess the object</h1>
-        <p className="text-center text-muted">If you score a perfect 100, you'll get a <strong>{word.word ? word.word.split(" ")[0] : 'umm..'}</strong>!</p>
+        <p className="text-center text-muted">If you score a perfect 100, you'll get a
+          <strong>
+            {word.word ? (
+              <span>&nbsp;{word.word.split(" ")[0]} &#128079;</span>
+            ) : ' umm..'}
+          </strong>!
+        </p>
         <div className={`${classes.objectText} my-4 text-center`}>
           {keyword ? keyword.key : '...'}
         </div>
@@ -83,7 +97,7 @@ const GuessMode = () => {
             images.images ? (
               images.images.map((image, i) => (
                 <div className="col-lg-3 col-md-6" key={`image_card_${i}`}>
-                  <div className={`${classes.card}`}>
+                  <div className={`${classes.card}`} onClick={() => checkImage(i)}>
                     <img src={image} alt={`option_${i}`} className={`img-fluid`} />
                     <span className={`text-center ${classes.cardQuote}`}>{quotes[i]}</span>
                   </div>
@@ -94,7 +108,7 @@ const GuessMode = () => {
         </div>
 
         <div className="text-center">
-          <button onClick={() => nextStage(setStage, stage)} className={` ${classes.btn}`}>Next</button>
+          <button onClick={nextStage} className={` ${classes.btn}`}>Next</button>
         </div>
 
         <div className={`${classes.status}`}>
@@ -112,6 +126,12 @@ const GuessMode = () => {
         <div className="text-center">
           <p className="text-muted">{timer < 10 ? timer === 0 ? "Loser!" : "Hurry Up!" : "Beware of the options! They're intimidating."}</p>
         </div>
+
+        <p className="text-muted" style={{ paddingLeft: '12px' }}>
+          <small>
+            <i>You're French is probably trash.</i>
+          </small>
+        </p>
       </div>
     </div>
   )
