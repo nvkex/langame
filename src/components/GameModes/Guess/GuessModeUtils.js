@@ -1,15 +1,21 @@
 import axios from "axios"
-import { BASE_URL, CORS_BYPASS_URL, DETECT_OBJECTS, PICSUM_URL, RANDOM_WORD_URL } from '../../../constants'
+import { BASE_URL, CORS_BYPASS_URL, DETECT_OBJECTS, PICSUM_URL2, RANDOM_WORD_URL, WIDTH, HEIGHT } from '../../../constants'
 
 /**
  * Return detected array of objects in the selected image. 
  * @param {String} url - image url.
  * @param {Function} setObject - hook to set the value of object.
  */
-export const getDetectedObjects = (url, setObject) => {
+export const getDetectedObjects = (url, index, callback) => {
     axios.post(`${BASE_URL}${DETECT_OBJECTS}`, { url: url })
         .then(res => {
-            setObject({ url: url, object: res.data });
+            for(var i=0;i<res.data.objects.length; i++){
+                if(res.data.objects[i].name.split(" ").length === 1){
+                    callback(res.data.objects[i].name, index);
+                    break;
+                }
+            }
+            
         })
         .catch(err => console.log(err))
 }
@@ -35,9 +41,12 @@ export const getRandomObject = (word, setWord) => {
  * @param {Integer} seed - seed for fetching random images
  * @returns - none
  */
-export const getImages = async (images, setImages, seed) => {
-    const list = await Array.from(Array(4), (_, i) => `${PICSUM_URL}${i + seed}`)
-    setImages({ ...images, images: list })
+export const getImages = async (images, setImages, callback) => {
+    const list = await Array.from(Array(4), (_, i) => `${PICSUM_URL2}${i+ new Date().getTime()}/${WIDTH}/${HEIGHT}`)
+    setImages({ ...images, images: list });
+
+    const index = Math.floor((Math.random() * (list.length - 1)) + 0);
+    getDetectedObjects(list[index], index, callback);
 }
 
 /**
