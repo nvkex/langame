@@ -1,5 +1,6 @@
 import axios from "axios"
-import { BASE_URL, CORS_BYPASS_URL, DETECT_OBJECTS, PICSUM_URL2, RANDOM_WORD_URL, WIDTH, HEIGHT } from '../../../constants'
+import { BASE_URL, CORS_BYPASS_URL, DETECT_OBJECTS_TR, PICSUM_URL2, RANDOM_WORD_URL, WIDTH, HEIGHT } from '../../../constants'
+
 
 /**
  * Return detected array of objects in the selected image. 
@@ -7,15 +8,9 @@ import { BASE_URL, CORS_BYPASS_URL, DETECT_OBJECTS, PICSUM_URL2, RANDOM_WORD_URL
  * @param {Function} setObject - hook to set the value of object.
  */
 export const getDetectedObjects = (url, index, callback) => {
-    axios.post(`${BASE_URL}${DETECT_OBJECTS}`, { url: url })
+    axios.post(`${BASE_URL}${DETECT_OBJECTS_TR}`, { url: url, to: 'fr' })
         .then(res => {
-            for(var i=0;i<res.data.objects.length; i++){
-                if(res.data.objects[i].name.split(" ").length === 1){
-                    callback(res.data.objects[i].name, index);
-                    break;
-                }
-            }
-            
+            callback(res.data.object, index);
         })
         .catch(err => console.log(err))
 }
@@ -38,14 +33,14 @@ export const getRandomObject = (word, setWord) => {
  * Get random images based on given seed
  * @param {Object} images - current state of images
  * @param {Function} setImages - hook to update state
- * @param {Integer} seed - seed for fetching random images
+ * @param {Function} callback - callback for further actions
  * @returns - none
  */
 export const getImages = async (images, setImages, callback) => {
-    const list = await Array.from(Array(4), (_, i) => `${PICSUM_URL2}${i+ new Date().getTime()}/${WIDTH}/${HEIGHT}`)
+    const list = await Array.from(Array(4), (_, i) => `${PICSUM_URL2}${i + new Date().getTime()}/${WIDTH}/${HEIGHT}`)
     setImages({ ...images, images: list });
 
-    const index = Math.floor((Math.random() * (list.length - 1)) + 0);
+    const index = Math.floor((Math.random() * (list.length)) + 0);
     getDetectedObjects(list[index], index, callback);
 }
 
