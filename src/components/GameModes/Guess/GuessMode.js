@@ -5,6 +5,7 @@ import { getImages, getRandomObject, getQuotes } from './GuessModeUtils';
 
 const GuessMode = () => {
 
+  const [keyword, setKeyword] = useState();
   const [word, setWord] = useState({ loading: true, word: null });
   const [images, setImages] = useState({ loading: true, images: null });
   const [quotes, setQuotes] = useState(getQuotes(4));
@@ -25,7 +26,9 @@ const GuessMode = () => {
     // It is so we get the same stage number(or 0 when game ends) after doing modulus.
     clearInterval(stopWatch);
     setStage((stage + 1) % MAX_STAGE);
-    getImages(images, setImages, stage * 4 + 1);
+    getImages(images, setImages, (keyObject, i) => {
+      setKeyword({ key: keyObject, index: i })
+    });
     setTimer(TIME_LIMIT);
     setQuotes(getQuotes(4))
   }
@@ -38,8 +41,10 @@ const GuessMode = () => {
 
   // Get the images
   if (images.loading && !images.images) {
-    getImages(images, setImages, stage);
-    setImages({ ...images, loading: false });
+    setImages({ ...images, loading: false })
+    getImages(images, setImages, (keyObject, i) => {
+      setKeyword({ key: keyObject, index: i })
+    });
   }
 
   // Clear interval when the time runs out.
@@ -68,9 +73,9 @@ const GuessMode = () => {
     <div className="container">
       <div className={classes.screenContainer}>
         <h1 className="text-center display-4">Guess the object</h1>
-        <p className="text-center text-muted">If you score a perfect 100, you'll get a <strong>{word.word ? word.word : 'umm..'}</strong>!</p>
+        <p className="text-center text-muted">If you score a perfect 100, you'll get a <strong>{word.word ? word.word.split(" ")[0] : 'umm..'}</strong>!</p>
         <div className={`${classes.objectText} my-4 text-center`}>
-          River
+          {keyword ? keyword.key : '...'}
         </div>
 
         <div className={`row ${classes.optionContainer}`}>
@@ -105,7 +110,7 @@ const GuessMode = () => {
         </div>
 
         <div className="text-center">
-          <p className="text-muted">{timer < 10 ? timer === 0? "Loser!": "Hurry Up!" : "Beware of the options! They're intimidating."}</p>
+          <p className="text-muted">{timer < 10 ? timer === 0 ? "Loser!" : "Hurry Up!" : "Beware of the options! They're intimidating."}</p>
         </div>
       </div>
     </div>
