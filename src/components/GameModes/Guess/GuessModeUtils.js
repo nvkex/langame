@@ -1,5 +1,5 @@
 import axios from "axios"
-import {  CORS_BYPASS_URL, DETECT_OBJECTS_TR, PICSUM_URL2, RANDOM_WORD_URL, WIDTH, HEIGHT } from '../../../constants'
+import {  CORS_BYPASS_URL, DETECT_OBJECTS_TR, PICSUM_URL2, RANDOM_WORD_URL, WIDTH, HEIGHT, BASE_URL } from '../../../constants'
 
 
 /**
@@ -8,7 +8,7 @@ import {  CORS_BYPASS_URL, DETECT_OBJECTS_TR, PICSUM_URL2, RANDOM_WORD_URL, WIDT
  * @param {Function} setObject - hook to set the value of object.
  */
 export const getDetectedObjects = (url, index, callback) => {
-    axios.post(`${window.location.origin}/${DETECT_OBJECTS_TR}`, { url: url, to: 'fr' })
+    axios.post(`${BASE_URL}${DETECT_OBJECTS_TR}`, { url: url, to: 'fr' })
         .then(res => {
             callback(res.data.object, index);
         })

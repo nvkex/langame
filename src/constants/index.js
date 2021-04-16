@@ -11,6 +11,6 @@ export const HEIGHT = 200;
 export const PICSUM_URL = `https://picsum.photos/${WIDTH}/${HEIGHT}?random=`;
 export const PICSUM_URL2 = `https://picsum.photos/seed/`;
 // Backend URLs
-export const BASE_URL = 'http://langameapiv1-env.eba-bgpkxq8p.ap-southeast-1.elasticbeanstalk.com/';
-export const DETECT_OBJECTS = 'api/v1/get-objects/';
-export const DETECT_OBJECTS_TR = 'api/v1/get-objects-tr/';
+export const BASE_URL = 'https://langame-api.herokuapp.com/';
+export const DETECT_OBJECTS = 'get-objects/';
+export const DETECT_OBJECTS_TR = 'get-objects-tr/';
