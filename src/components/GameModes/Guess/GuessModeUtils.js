@@ -36,9 +36,9 @@ export const getRandomObject = (word, setWord) => {
  * @param {Function} callback - callback for further actions
  * @returns - none
  */
-export const getImages = async (images, setImages, callback) => {
+export const getImages = async (setImages, callback) => {
     const list = await Array.from(Array(4), (_, i) => `${PICSUM_URL2}${i + new Date().getTime()}/${WIDTH}/${HEIGHT}`)
-    setImages({ ...images, images: list });
+    setImages({ loading:false, images: list });
 
     const index = Math.floor((Math.random() * (list.length)) + 0);
     getDetectedObjects(list[index], index, callback);
