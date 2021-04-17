@@ -111,7 +111,7 @@ const GuessMode = () => {
               <h5 className="text-danger">&#127937; {score}/100 &#127937;</h5>
               <p className="text-muted">
                 <small>
-                  <i>Probably you're highest achievment in life, so take a printout.</i> &#128522;
+                  <i>Probably your highest achievment in life, so take a printout.</i> &#128522;
                 </small>
               </p>
             </div>
@@ -183,7 +183,7 @@ const GuessMode = () => {
 
               <p className="text-muted" style={{ paddingLeft: '12px' }}>
                 <small>
-                  <i>You're French is probably trash. &#128078;</i>
+                  <i>Your French is probably trash. &#128078;</i>
                 </small>
               </p>
             </span>
