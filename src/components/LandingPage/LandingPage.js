@@ -12,17 +12,17 @@ const LandingPage = () => {
                     </div>
                 </div>
                 <div className={`row align-items-center ${classes.cardContainer}`}>
-                    <div className="col-6">
+                    <div className="col-12 col-md-12 col-lg-6">
                         <Link to="/guess">
-                            <div className={classes.card}>
+                            <div className={`my-2 ${classes.card}`}>
                                 Guess
                             </div>
                         </Link>
 
                     </div>
-                    <div className="col-6">
+                    <div className="col-12 col-md-12 col-lg-6">
                         <Link to="/learn">
-                            <div className={`${classes.disabled} ${classes.card}`}>
+                            <div className={`my-2 ${classes.disabled} ${classes.card}`}>
                                 Learn
                             </div>
                         </Link>
