@@ -104,8 +104,16 @@ const GuessMode = () => {
         <h1 className="text-center display-4">Guess the object</h1>
         {
           finished ? (
-            <div>
-              Congo Bhai!
+            <div className={`text-center`}>
+              <h3 className="text-dark">Very Nice!</h3>
+              <p className="text-dark">Clapps &#128079; &#128079; &#128079;</p>
+              <h5 className="text-dark">You scored</h5>
+              <h5 className="text-danger">&#127937; {score}/100 &#127937;</h5>
+              <p className="text-muted">
+                <small>
+                  <i>Probably you're highest achievment in life, so take a printout.</i> &#128522;
+                </small>
+              </p>
             </div>
           ) : (
             <span>
