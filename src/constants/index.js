@@ -3,7 +3,7 @@ export const RANDOM_WORD_URL = 'http://names.drycodes.com/1?nameOptions=objects&
 export const CORS_BYPASS_URL = 'https://uncors.now.sh/?url=';
 
 // Guess Mode
-export const MAX_STAGE = 11;
+export const MAX_STAGE = 12;
 export const TIME_LIMIT = 25;
 
 export const WIDTH = 300;
