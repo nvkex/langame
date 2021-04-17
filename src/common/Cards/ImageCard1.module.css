@@ -1,0 +1,35 @@
+.card {
+  position: relative;
+  height: 200px;
+  margin-bottom: 8px;
+}
+.card img {
+  cursor: pointer;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3) !important;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.card:hover .cardQuote {
+  bottom: 0;
+  height: 20%;
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.card .cardQuote {
+  font-weight: 600;
+  color: black;
+  border-radius: 4px 4px 0 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 100%;
+  width: 100%;
+  height: 0;
+  transition: 0.4s ease;
+  overflow: hidden;
+  padding-top: 6px;
+}
