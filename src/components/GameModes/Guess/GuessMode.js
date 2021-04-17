@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import ImageCard1 from '../../../common/Cards/ImageCard1';
 import { MAX_STAGE, TIME_LIMIT } from '../../../constants';
 import classes from './GuessMode.module.css'
 import { getImages, getRandomObject, getQuotes } from './GuessModeUtils';
@@ -13,11 +14,17 @@ const GuessMode = () => {
   const [score, setScore] = useState(0);
   const [timer, setTimer] = useState(TIME_LIMIT);
   const [stopWatch, setStopWatch] = useState();
+  const [check, setCheck] = useState({ show: false, match: false });
 
   const checkImage = (index) => {
     if (index === keyword.index) {
       setScore(s => s + 10);
+      setCheck({ show: true, match: true });
     }
+    else {
+      setCheck({ show: true, match: false });
+    }
+    clearInterval(stopWatch);
   }
 
   /**
@@ -27,31 +34,18 @@ const GuessMode = () => {
  * @returns - none
  */
   const nextStage = () => {
-    if (stage === MAX_STAGE-1)
+    if (stage === MAX_STAGE - 1)
       window.location.href = '/'
     // MAX_STAGE will be one more than final stage
     // It is so we get the same stage number(or 0 when game ends) after doing modulus.
     clearInterval(stopWatch);
     setStage((stage + 1) % MAX_STAGE);
-    getImages(images, setImages, (keyObject, i) => {
+    setCheck({ show: false, match: false });
+    getImages(setImages, (keyObject, i) => {
       setKeyword({ key: keyObject, index: i })
     });
     setTimer(TIME_LIMIT);
     setQuotes(getQuotes(4))
-  }
-
-  // Get random word
-  if (word.loading && !word.word) {
-    getRandomObject(word, setWord);
-    setWord({ ...word, loading: false });
-  }
-
-  // Get the images
-  if (images.loading && !images.images) {
-    setImages({ ...images, loading: false })
-    getImages(images, setImages, (keyObject, i) => {
-      setKeyword({ key: keyObject, index: i })
-    });
   }
 
   // Clear interval when the time runs out.
@@ -60,6 +54,18 @@ const GuessMode = () => {
   }
 
   useEffect(() => {
+    // Get random word
+    if (word.loading && !word.word) {
+      getRandomObject(word, setWord);
+      setWord({ ...word, loading: false });
+    }
+
+    // Get the images
+    if (images.loading && !images.images) {
+      getImages(setImages, (keyObject, i) => {
+        setKeyword({ key: keyObject, index: i })
+      });
+    }
 
     // Start Timer
     if (timer === TIME_LIMIT) {
@@ -96,24 +102,42 @@ const GuessMode = () => {
           {
             images.images ? (
               images.images.map((image, i) => (
-                <div className="col-lg-3 col-md-6" key={`image_card_${i}`}>
-                  <div className={`${classes.card}`} onClick={() => checkImage(i)}>
-                    <img src={image} alt={`option_${i}`} className={`img-fluid`} />
-                    <span className={`text-center ${classes.cardQuote}`}>{quotes[i]}</span>
-                  </div>
-                </div>
+                <ImageCard1 i={i} image={image} checkImage={checkImage} quotes={quotes} key={`image_card_${i}`} />
               ))
+            ) : null
+          }
+          {
+            check.show ? (
+              <div className={`col-lg-12 col-md-12 col-12 ${classes.stageResult}`}>
+                {
+                  check.match ? (
+                    <div style={{color: '#2ecc71'}} className="text-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                      </svg>
+                      <p>Damn son!</p>
+                    </div>
+                  ) : (
+                    <div style={{color: '#c45858'}} className="text-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+                      </svg>
+                      <p>Thats a shame!</p>
+                    </div>
+                  )
+                }
+              </div>
             ) : null
           }
         </div>
 
-        <div className="text-center">
+        <div className="text-center mt-2">
           <button onClick={nextStage} className={` ${classes.btn}`}>Next</button>
         </div>
 
         <div className={`${classes.status}`}>
           <div className={`${classes.stage}`} data-toggle="tooltip" data-placement="bottom" title="You're still on this stage?!">
-            {stage === MAX_STAGE - 1 ? (<span>&#127937;</span>) : (<span>&#127969;</span>)}{stage}
+            {stage === MAX_STAGE - 1 ? (<span>&#127937;</span>) : (<span>&#128645;</span>)}{stage}
           </div>
           <div className={`${classes.timer}`} data-toggle="tooltip" data-placement="left" title="Yes, am busy. I dont have all day!">
             &#8987;{timer}s
