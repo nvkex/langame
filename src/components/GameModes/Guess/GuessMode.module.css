@@ -65,11 +65,22 @@ p, button, .objectText{
   outline: none;
   border-radius: 4px;
   padding: 8px 20px;
-  background-color: #c45858;
   color: white;
 }
 
-.btn:hover{
+.btnFinal{
+  background-color: #5ac988;
+}
+
+.btnFinal:hover{
+  background-color: #18bb5c;
+}
+
+.btnNorm{
+  background-color: #c45858;
+}
+
+.btnNorm:hover{
   background-color: #c02626;
 }
 
