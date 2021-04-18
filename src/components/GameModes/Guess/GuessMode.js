@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ImageCard1 from '../../../common/Cards/ImageCard1';
-import { MAX_STAGE, TIME_LIMIT } from '../../../constants';
+import Overlay1 from '../../../common/Overlays/Overlay1';
+import { MAX_SCORE, MAX_STAGE, TIME_LIMIT } from '../../../constants';
 import classes from './GuessMode.module.css'
 import { getImages, getRandomObject, getQuotes } from './GuessModeUtils';
 
@@ -17,9 +18,14 @@ const GuessMode = () => {
   const [check, setCheck] = useState({ show: false, match: false });
   const [finished, setFinished] = useState(false)
 
+  /**
+   * Stops the timer and checks if user has clicked on the correct image.
+   * If true it increases the score and shows in an overlay.
+   * @param {Integer} index - index of the correct image
+   */
   const checkImage = (index) => {
     if (index === keyword.index) {
-      setScore(s => s + 10);
+      setScore(s => s + (MAX_SCORE / (MAX_STAGE - 2)));
       setCheck({ show: true, match: true });
     }
     else {
@@ -28,6 +34,9 @@ const GuessMode = () => {
     clearInterval(stopWatch);
   }
 
+  /**
+   * Creates a setInterval and stores reference in state
+   */
   const countDown = () => {
     let stopwatch = setInterval(() => {
       setTimer(t => t - 1)
@@ -37,10 +46,9 @@ const GuessMode = () => {
   }
 
   /**
- * Sets the stage to the immediate next or 0.
- * @param {Function} setStage - hook to set the value of 'Stage' in state
- * @param {Integer} current - value of current stage
- * @returns - none
+ * Sets the stage to the immediate next or End-Stage.
+ * Clears all setIntervals 
+ * Refreshes all Game components
  */
   const nextStage = () => {
     clearInterval(stopWatch);
@@ -48,8 +56,6 @@ const GuessMode = () => {
       setFinished(true)
     }
     else {
-      // MAX_STAGE will be one more than final stage
-      // It is so we get the same stage number(or 0 when game ends) after doing modulus.
       setKeyword(null);
       setTimer(TIME_LIMIT);
       setCheck({ show: false, match: false });
@@ -58,9 +64,21 @@ const GuessMode = () => {
         setKeyword({ key: keyObject, index: i })
         countDown();
       });
-      
+
     }
-    setStage((stage + 1) % MAX_STAGE);
+
+    // MAX_STAGE will be two more than final stage
+    // MAX_STAGE-1 will be result stage
+    setStage((stage + 1) % (MAX_STAGE-1));
+  }
+
+  /**
+   * Restart the game and initialize game metrics
+   */
+  const restart = () => {
+    setScore(0);
+    setFinished(false);
+    nextStage();
   }
 
   // Clear interval when the time runs out.
@@ -104,17 +122,7 @@ const GuessMode = () => {
         <h1 className="text-center display-4">Guess the object</h1>
         {
           finished ? (
-            <div className={`text-center`}>
-              <h3 className="text-dark">Very Nice!</h3>
-              <p className="text-dark">Clapps &#128079; &#128079; &#128079;</p>
-              <h5 className="text-dark">You scored</h5>
-              <h5 className="text-danger">&#127937; {score}/100 &#127937;</h5>
-              <p className="text-muted">
-                <small>
-                  <i>Probably your highest achievment in life, so take a printout.</i> &#128522;
-                </small>
-              </p>
-            </div>
+            <Overlay1 score={score} restart={restart} />
           ) : (
             <span>
               <p className="text-center text-muted">If you score a perfect 100, you'll get a
@@ -152,7 +160,7 @@ const GuessMode = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-circle-fill" viewBox="0 0 16 16">
                               <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
                             </svg>
-                            <p>{timer === 0 ? 'You kept me waiting for too long!' : 'Thats a shame!'}</p>
+                            <p>{timer === 0 ? (<span>You kept me waiting for too long! &#128148;</span>) : 'Thats a shame!'}</p>
                           </div>
                         )
                       }
@@ -162,7 +170,9 @@ const GuessMode = () => {
               </div>
 
               <div className="text-center mt-2">
-                <button onClick={nextStage} className={` ${classes.btn}`}>Next</button>
+                <button onClick={nextStage} className={` ${classes.btn} ${stage === MAX_STAGE - 2 ? classes.btnFinal : classes.btnNorm}`}>
+                  {stage === MAX_STAGE - 2 ? 'Finish' : 'Next'}
+                </button>
               </div>
 
               <div className={`${classes.status}`}>
