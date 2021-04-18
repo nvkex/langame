@@ -5,6 +5,7 @@ export const CORS_BYPASS_URL = 'https://uncors.now.sh/?url=';
 // Guess Mode
 export const MAX_STAGE = 12;
 export const TIME_LIMIT = 25;
+export const MAX_SCORE = 100;
 
 export const WIDTH = 300;
 export const HEIGHT = 200;
