@@ -17,7 +17,7 @@ const Overlay1 = (props) => {
             <p className="text-success">{msg}</p>
             <div className={`${classes.scoreBox}`}>
                 <h5 className="text-dark">You scored</h5>
-                <h5 className="text-danger">
+                <h5 className={props.score === MAX_SCORE ? classes.max : classes.norm}>
                     {
                         props.score === MAX_SCORE ? 
                         <span>&#128561; {props.score}/{MAX_SCORE} &#128561;</span>
@@ -32,6 +32,11 @@ const Overlay1 = (props) => {
                     <i className= {classes.rudeMsg}>Probably your highest achievment in life, so take a printout.</i> &#128522;
                 </small>
             </p>
+
+            <div className={` text-center ${classes.restart}`}>
+                <p className="mt-4 text-dark">Embarass yourself again??</p>
+                <button to="/guess" className={classes.btn} onClick={props.restart}>Let's Go!!</button>
+            </div>
         </div>
     )
 }
