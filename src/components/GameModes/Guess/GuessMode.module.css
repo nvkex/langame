@@ -109,7 +109,12 @@ p, button, .objectText{
 }
 
 .stageResult p{
-  font-size: 26px;
+  font-size: 20px;
   text-shadow: 1px 0px 6px black;
 }
 
+.wordShow{
+  text-decoration: underline;
+  color: white;
+  text-transform: uppercase;
+}
