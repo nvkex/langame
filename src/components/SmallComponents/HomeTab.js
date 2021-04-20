@@ -1,12 +1,13 @@
 import classes from './HomeTab.module.css'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const HomeTab = () => {
   return (
-    <a href="/" className={classes.hometab}>
+    <Link to="/" className={classes.hometab}>
       &#127968; 
       <span className={classes.text}>Home</span>
-    </a>
+    </Link>
   )
 }
 
