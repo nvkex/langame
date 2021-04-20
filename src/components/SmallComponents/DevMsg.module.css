@@ -1,5 +1,25 @@
+@media (max-width: 400px){
+    .devMsg{
+        height: 100% ;
+        width:100% !important;
+        position: relative !important;
+        bottom: 0px !important;
+        padding: 0px !important;
+        backdrop-filter: unset !important;
+        background-color: unset !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .text{
+        display: none;
+    }
+}
+
+
 .devMsg{
-    font-size: 30px;
+    width: 40px;
     font-weight: 600;
     position: fixed;
     bottom: 4px;
