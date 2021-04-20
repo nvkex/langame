@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ImageCard1 from '../../../common/Cards/ImageCard1';
 import Overlay1 from '../../../common/Overlays/Overlay1';
-import { MAX_SCORE, MAX_STAGE, TIME_LIMIT } from '../../../constants';
+import { DEFAULT_LANGUAGE, MAX_SCORE, MAX_STAGE, TIME_LIMIT } from '../../../constants';
 import classes from './GuessMode.module.css'
 import { getImages, getRandomObject, getQuotes } from './GuessModeUtils';
 
@@ -60,16 +60,16 @@ const GuessMode = () => {
       setTimer(TIME_LIMIT);
       setCheck({ show: false, match: false });
       setQuotes(getQuotes(4))
-      getImages(setImages, (keyObject, i) => {
-        setKeyword({ key: keyObject, index: i })
+      getImages(setImages, (keyObject, i, raw) => {
+        setKeyword({ key: keyObject, index: i, raw: raw })
         countDown();
       });
-
+      window.scrollTo(0,0);
     }
 
     // MAX_STAGE will be two more than final stage
     // MAX_STAGE-1 will be result stage
-    setStage((stage + 1) % (MAX_STAGE-1));
+    setStage((stage + 1) % (MAX_STAGE - 1));
   }
 
   /**
@@ -98,8 +98,8 @@ const GuessMode = () => {
 
     // Get the images
     if (images.loading && !images.images) {
-      getImages(setImages, (keyObject, i) => {
-        setKeyword({ key: keyObject, index: i })
+      getImages(setImages, (keyObject, i, raw) => {
+        setKeyword({ key: keyObject, index: i, raw: raw })
         countDown();
       });
     }
@@ -133,7 +133,7 @@ const GuessMode = () => {
                 </strong>!
               </p>
               <div className={`${classes.objectText} my-4 text-center`}>
-                {keyword ? keyword.key : (<span style={{color:'#ffb7b7'}}>Thinking...</span>)}
+                {keyword ? keyword.key : (<span style={{ color: '#ffb7b7' }}>Thinking...</span>)}
               </div>
 
               <div className={`row ${classes.optionContainer}`}>
@@ -153,14 +153,16 @@ const GuessMode = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check-circle-fill" viewBox="0 0 16 16">
                               <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
                             </svg>
-                            <p>Probably Luck!</p>
+                            <p><small>{keyword.raw === keyword.key ? 'Well, this was obvious.' : 'Probably Luck!'}</small></p>
+                            <p><span className={classes.wordShow}>{keyword.raw}</span> is <span className={classes.wordShow}>{keyword.key}</span> in {DEFAULT_LANGUAGE.language}.</p>
                           </div>
                         ) : (
                           <div style={{ color: '#c02626' }} className="text-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-circle-fill" viewBox="0 0 16 16">
                               <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
                             </svg>
-                            <p>{timer === 0 ? (<span>You kept me waiting for too long! &#128148;</span>) : 'Thats a shame!'}</p>
+                            <p>{timer === 0 ? (<span>You kept me waiting for too long! &#128148;</span>) : keyword.raw === keyword.key ? 'Really? You coudn\'t guess this.' : 'Thats a shame!'}</p>
+                            <p><span className={classes.wordShow}>{keyword.raw}</span> is <span className={classes.wordShow}>{keyword.key}</span> in {DEFAULT_LANGUAGE.language}.</p>
                           </div>
                         )
                       }
@@ -193,7 +195,7 @@ const GuessMode = () => {
 
               <p className="text-muted" style={{ paddingLeft: '12px' }}>
                 <small>
-                  <i>Your French is probably trash. &#128078;</i>
+                  <i>Your {DEFAULT_LANGUAGE.language} is probably trash.</i> &#128078;
                 </small>
               </p>
             </span>
