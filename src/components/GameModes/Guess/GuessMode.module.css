@@ -93,7 +93,7 @@ p, button, .objectText{
   left:0;
   width:100%;
   height:100%;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(20px);
   display: flex;
   justify-content: center;
@@ -110,6 +110,6 @@ p, button, .objectText{
 
 .stageResult p{
   font-size: 26px;
-  text-shadow: 1px 0px 2px black;
+  text-shadow: 1px 0px 6px black;
 }
 
