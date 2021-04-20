@@ -1,6 +1,7 @@
 
 export const RANDOM_WORD_URL = 'http://names.drycodes.com/1?nameOptions=objects&combine=1';
 export const CORS_BYPASS_URL = 'https://uncors.now.sh/?url=';
+export const DEFAULT_LANGUAGE = { code: 'fr', language: 'French' };
 
 // Guess Mode
 export const MAX_STAGE = 12;
