@@ -1,0 +1,8 @@
+.textCard{
+    background-color: white;
+    color: black;
+    padding: 16px 10px;
+    border-radius: 10px;
+    margin: 4px 0;
+    cursor: pointer;
+}
