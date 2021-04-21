@@ -16,3 +16,7 @@ export const PICSUM_URL2 = `https://picsum.photos/seed/`;
 export const BASE_URL = 'https://langame-api.herokuapp.com/';
 export const DETECT_OBJECTS = 'get-objects/';
 export const DETECT_OBJECTS_TR = 'get-objects-tr/';
+
+
+
+export const DEFAULT_LOGO_WIDTH = '50px'
