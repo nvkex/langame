@@ -5,14 +5,14 @@ export const SUPPORTED_LANGUAGES = [
     },
     {
         lang: 'German',
-        code: 'fr'
+        code: 'ge'
     },
     {
         lang: 'Swedish',
-        code: 'fr'
+        code: 'sw'
     },
     {
         lang: 'Japanesse',
-        code: 'fr'
+        code: 'jp'
     }
 ]
