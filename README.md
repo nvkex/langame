@@ -1,6 +1,6 @@
 # Langame
 
-![Screenshot](./public/static/images/cover.png)
+![Screenshot](./public/assets/images/cover.png)
 
 Learn and improve language skills with fun featured games.
 
