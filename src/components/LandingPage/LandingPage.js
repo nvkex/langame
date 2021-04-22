@@ -5,7 +5,7 @@ import classes from './LandingPage.module.css'
 
 const LandingPage = () => {
     return (
-        <div style={{marginTop:'4px'}} className={classes.pageContainer}>
+        <div className={classes.pageContainer}>
             <div className={`container`}>
                 <AppInfo />
                 <div className={`row align-items-center ${classes.cardContainer}`}>
