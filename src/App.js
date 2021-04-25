@@ -4,20 +4,32 @@ import LandingPage from './components/LandingPage/LandingPage';
 import ModeContainer from './containers/ModeContainer';
 import GuessMode from './components/GameModes/Guess/GuessMode';
 import LearnMode from './components/GameModes/Learn/LearnMode';
+import { useState } from 'react';
+import { themeConfig } from './data';
+import { ThemeProvider } from 'react-jss';
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
+  var theme = themeConfig.light;
+  if(darkMode){
+    theme = themeConfig.dark;
+  }
   return (
     <div>
-      <Switch>
-        <Route exact path="/" component={LandingPage} />
-        <ModeContainer>
-          <Switch>
-            <Route exact path="/guess" component={GuessMode}/>
-            <Route exact path="/learn" component={LearnMode}/>
-          </Switch>
-        </ModeContainer>
-      </Switch>
-    </div>
+      <ThemeProvider theme={theme}>
+        <Switch>
+
+          <Route exact path="/" component={LandingPage} />
+          <ModeContainer>
+            <Switch>
+              <Route exact path="/guess" component={GuessMode} />
+              <Route exact path="/learn" component={LearnMode} />
+            </Switch>
+          </ModeContainer>
+
+        </Switch>
+      </ThemeProvider>
+    </div >
   );
 }
 
