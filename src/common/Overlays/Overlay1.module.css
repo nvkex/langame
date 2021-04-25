@@ -1,5 +1,6 @@
 .overlayContainer {
   width: 100%;
+  position: relative;
 }
 
 .scoreBox {
@@ -45,5 +46,4 @@
 .restart{
     width: 100%;
     position: absolute;
-    bottom: 10px;
 }
