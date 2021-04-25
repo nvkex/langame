@@ -1,7 +1,7 @@
 import classes from './SelectLanguage.module.css'
 import React from 'react'
 import TextCard1 from '../../common/Cards/TextCard1'
-import { SUPPORTED_LANGUAGES } from '../../data/Languages'
+import { SUPPORTED_LANGUAGES } from '../../data'
 import AppInfo from '../../common/AppInfo/AppInfo'
 
 const SelectLanguage = (props) => {
