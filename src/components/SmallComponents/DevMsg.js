@@ -1,7 +1,44 @@
-import classes from './DevMsg.module.css'
 import React from 'react'
+import { createUseStyles } from 'react-jss'
+
+const useStyles = createUseStyles({
+  '@media (max-width: 400px)': {
+    devMsg: {
+      height: '100% ',
+      width: '100% !important',
+      position: 'relative !important',
+      bottom: '0px !important',
+      padding: '0px !important',
+      backdropFilter: 'unset !important',
+      backgroundColor: 'unset !important',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    text: {
+      display: 'none !important'
+    }
+  },
+  text: {
+    display: 'block'
+  },
+  devMsg: {
+    textDecoration: 'none',
+    width: '40px',
+    fontWeight: '600',
+    position: 'fixed',
+    bottom: '4px',
+    left: '4px',
+    color: 'black',
+
+    '&:hover':{
+      color: 'black'
+    }
+  }
+})
 
 const DevMsg = () => {
+  const classes = useStyles();
   return (
     <a className={classes.devMsg} href="https://github.com/nvkex">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-github" viewBox="0 0 16 16">

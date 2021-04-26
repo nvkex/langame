@@ -1,8 +1,50 @@
 import React from 'react'
+import { createUseStyles } from 'react-jss';
 import { MAX_SCORE } from '../../constants';
-import classes from './Overlay1.module.css'
+
+const useStyles = createUseStyles({
+    overlayContainer: {
+        width: '100%',
+        position: 'relative'
+      },      
+    scoreBox : {
+        borderRadius: '10px',
+        padding: '10px',
+        width: '200px',
+        margin: 'auto',
+        boxShadow: '0px 0px 14px #c45858'
+      },      
+    rudeMsg : {
+        borderBottom: '2px solid #6c757d5d'
+      },
+    btn : {
+        transition: '0.5s',
+        border: '2px solid white',
+        outline: 'none',
+        borderRadius: '4px',
+        padding: '4px 10px',
+        color: 'white',
+        backgroundColor:'#5ac988',
+        '&:hover' : {
+            backgroundColor: '#18bb5c'
+          }
+      },
+      max:{
+        fontWeight: 700,
+        color: '#18bb5c'
+      },
+      norm:{
+        fontWeight: 700,
+        color: '#c02626'
+      },
+      restart:{
+          width: '100%',
+          position: 'absolute'
+      }
+})
 
 const Overlay1 = (props) => {
+    const classes = useStyles();
     var msg = null;
     if(props.score === MAX_SCORE){
         msg = (<span>Alright! Alright! Nothing fancy. &#128530;</span>)
