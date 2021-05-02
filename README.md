@@ -6,7 +6,7 @@ Learn and improve language skills with fun featured games.
 
 ## Game Modes
 
-- Guess Mode *(LIVE)*
+- Guess Mode *(**LIVE**)*
 - Learn Mode *(UC)*
 - Mahjong *(UC)*
 
