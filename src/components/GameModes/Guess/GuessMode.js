@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { createUseStyles, useTheme } from 'react-jss';
 import ImageCard1 from '../../../common/Cards/ImageCard1';
 import Overlay1 from '../../../common/Overlays/Overlay1';
 import { DEFAULT_LANGUAGE, MAX_SCORE, MAX_STAGE, TIME_LIMIT } from '../../../constants';
+import LanguageContext from '../../../containers/LanguageContext';
 import { getImages, getRandomObject, getQuotes } from './GuessModeUtils';
 
 const useStyles = createUseStyles({
@@ -16,17 +17,6 @@ const useStyles = createUseStyles({
       padding: '0rem !important'
     }
   },
-
-  h1: {
-    fontWeight: '700 !important',
-    textShadow: '1px 1px 2px #343434, 2px 2px 10px rgba(0, 0, 0, 0.1)'
-  },
-  p: {
-    fontWeight: '600'
-  },
-  button: {
-    fontWeight: '600'
-  },
   pStyled: {
     color: ({ theme }) => theme.color2
   },
@@ -36,6 +26,16 @@ const useStyles = createUseStyles({
     backgroundColor: 'rgba(255, 255, 255, 0.4)',
     borderRadius: '0 0 10px 10px',
     boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.3)',
+    '& h1': {
+      fontWeight: '700 !important',
+      textShadow: '1px 1px 2px #343434, 2px 2px 10px rgba(0, 0, 0, 0.1)'
+    },
+    '& p': {
+      fontWeight: '600'
+    },
+    '& button': {
+      fontWeight: '600'
+    }
   },
 
   objectText: {
@@ -150,7 +150,8 @@ const GuessMode = () => {
   const [timer, setTimer] = useState(TIME_LIMIT);
   const [stopWatch, setStopWatch] = useState();
   const [check, setCheck] = useState({ show: false, match: false });
-  const [finished, setFinished] = useState(false)
+  const [finished, setFinished] = useState(false);
+  const lan = useContext(LanguageContext);
 
   /**
    * Stops the timer and checks if user has clicked on the correct image.
@@ -197,7 +198,7 @@ const GuessMode = () => {
       getImages(setImages, (keyObject, i, raw) => {
         setKeyword({ key: keyObject, index: i, raw: raw })
         countDown();
-      });
+      }, lan);
       window.scrollTo(0, 0);
     }
 
@@ -223,7 +224,6 @@ const GuessMode = () => {
 
 
   useEffect(() => {
-
     // Get random word
     if (word.loading && !word.word) {
       getRandomObject(word, setWord);
@@ -235,7 +235,7 @@ const GuessMode = () => {
       getImages(setImages, (keyObject, i, raw) => {
         setKeyword({ key: keyObject, index: i, raw: raw })
         countDown();
-      });
+      }, lan);
     }
 
     // Start Timer
@@ -256,7 +256,7 @@ const GuessMode = () => {
         <h1 className="text-center display-4">Guess the object</h1>
         {
           finished ? (
-            <Overlay1 score={score} restart={restart} />
+            <Overlay1 score={score} restart={restart} language={lan}/>
           ) : (
             <span>
               <p className={`text-center ${classes.pStyled}`}>If you score a perfect 100, you'll get a
@@ -288,7 +288,7 @@ const GuessMode = () => {
                               <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
                             </svg>
                             <p><small>{keyword.raw === keyword.key ? 'Well, this was obvious.' : 'Probably Luck!'}</small></p>
-                            <p><span className={classes.wordShow}>{keyword.raw}</span> is <span className={classes.wordShow}>{keyword.key}</span> in {DEFAULT_LANGUAGE.language}.</p>
+                            <p><span className={classes.wordShow}>{keyword.raw}</span> is <span className={classes.wordShow}>{keyword.key}</span> in {lan.lang}.</p>
                           </div>
                         ) : (
                           <div style={{ color: '#c02626' }} className="text-center">
@@ -296,7 +296,7 @@ const GuessMode = () => {
                               <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
                             </svg>
                             <p>{timer === 0 ? (<span>You kept me waiting for too long! &#128148;</span>) : keyword.raw === keyword.key ? 'Really? You coudn\'t guess this.' : 'Thats a shame!'}</p>
-                            <p><span className={classes.wordShow}>{keyword.raw}</span> is <span className={classes.wordShow}>{keyword.key}</span> in {DEFAULT_LANGUAGE.language}.</p>
+                            <p><span className={classes.wordShow}>{keyword.raw}</span> is <span className={classes.wordShow}>{keyword.key}</span> in {lan.lang}.</p>
                           </div>
                         )
                       }
@@ -329,7 +329,7 @@ const GuessMode = () => {
 
               <p className={`${classes.pStyled}`} style={{ paddingLeft: '12px' }}>
                 <small>
-                  <i>Your {DEFAULT_LANGUAGE.language} is probably trash.</i> &#128078;
+                  <i>Your {lan.lang} is probably trash.</i> &#128078;
                 </small>
               </p>
             </span>
