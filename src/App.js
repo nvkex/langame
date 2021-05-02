@@ -9,6 +9,7 @@ import { themeConfig } from './data';
 import { ThemeProvider } from 'react-jss';
 
 function App() {
+  // eslint-disable-next-line no-unused-vars
   const [darkMode, setDarkMode] = useState(true);
   var theme = themeConfig.light;
   if(darkMode){

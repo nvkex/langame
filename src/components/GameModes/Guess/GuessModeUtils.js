@@ -1,5 +1,5 @@
 import axios from "axios"
-import {  CORS_BYPASS_URL, DETECT_OBJECTS_TR, PICSUM_URL2, RANDOM_WORD_URL, WIDTH, HEIGHT, BASE_URL, DEFAULT_LANGUAGE } from '../../../constants'
+import {  CORS_BYPASS_URL, DETECT_OBJECTS_TR, PICSUM_URL2, RANDOM_WORD_URL, WIDTH, HEIGHT, BASE_URL } from '../../../constants'
 
 
 

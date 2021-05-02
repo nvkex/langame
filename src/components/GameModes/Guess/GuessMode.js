@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { createUseStyles, useTheme } from 'react-jss';
 import ImageCard1 from '../../../common/Cards/ImageCard1';
 import Overlay1 from '../../../common/Overlays/Overlay1';
-import { DEFAULT_LANGUAGE, MAX_SCORE, MAX_STAGE, TIME_LIMIT } from '../../../constants';
+import {  MAX_SCORE, MAX_STAGE, TIME_LIMIT } from '../../../constants';
 import LanguageContext from '../../../containers/LanguageContext';
 import { getImages, getRandomObject, getQuotes } from './GuessModeUtils';
 
