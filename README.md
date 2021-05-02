@@ -14,8 +14,13 @@ Learn and improve language skills with fun featured games.
 
 ### Guess Mode
 - French
-- ~~German~~
-- ~~Swedish~~
+- Dutch
+- Swedish
+- Spanish
+- Czech
+- Danish
+- German
+- Hindi
 - ~~Japanesse~~
 
 
