@@ -4,16 +4,32 @@ export const SUPPORTED_LANGUAGES = [
         code: 'fr'
     },
     {
-        lang: 'German',
-        code: 'ge'
+        lang: 'Dutch',
+        code: 'nl'
     },
     {
         lang: 'Swedish',
-        code: 'sw'
+        code: 'sv'
     },
     {
-        lang: 'Japanesse',
-        code: 'jp'
+        lang: 'Spanish',
+        code: 'es'
+    },
+    {
+        lang: 'Czech',
+        code: 'cs'
+    },
+    {
+        lang: 'Danish',
+        code: 'da'
+    },
+    {
+        lang: 'German',
+        code: 'de'
+    },
+    {
+        lang: 'Hindi',
+        code: 'hi'
     }
 ]
 
