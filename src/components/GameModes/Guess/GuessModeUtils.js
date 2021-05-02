@@ -2,13 +2,14 @@ import axios from "axios"
 import {  CORS_BYPASS_URL, DETECT_OBJECTS_TR, PICSUM_URL2, RANDOM_WORD_URL, WIDTH, HEIGHT, BASE_URL, DEFAULT_LANGUAGE } from '../../../constants'
 
 
+
 /**
  * Return detected array of objects in the selected image. 
  * @param {String} url - image url.
  * @param {Function} setObject - hook to set the value of object.
  */
-export const getDetectedObjects = (url, index, callback) => {
-    axios.post(`${BASE_URL}${DETECT_OBJECTS_TR}`, { url: url, to: DEFAULT_LANGUAGE.code })
+export const getDetectedObjects = (url, index, callback, language) => {
+    axios.post(`${BASE_URL}${DETECT_OBJECTS_TR}`, { url: url, to: language.code })
         .then(res => {
             callback(res.data.object, index, res.data.raw);
         })
@@ -36,12 +37,12 @@ export const getRandomObject = (word, setWord) => {
  * @param {Function} callback - callback for further actions
  * @returns - none
  */
-export const getImages = async (setImages, callback) => {
+export const getImages = async (setImages, callback, language) => {
     const list = await Array.from(Array(4), (_, i) => `${PICSUM_URL2}${i + new Date().getTime()}/${WIDTH}/${HEIGHT}`)
     setImages({ loading:false, images: list });
 
     const index = Math.floor((Math.random() * (list.length)) + 0);
-    getDetectedObjects(list[index], index, callback);
+    getDetectedObjects(list[index], index, callback, language);
 }
 
 /**
