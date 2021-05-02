@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import DevMsg from '../components/SmallComponents/DevMsg'
 import HomeTab from '../components/SmallComponents/HomeTab'
 import SelectLanguage from '../components/SmallComponents/SelectLanguage'
+import LanguageContext from './LanguageContext'
 import { createUseStyles } from 'react-jss'
 
 
@@ -36,7 +37,10 @@ const ModeContainer = (props) => {
     <div>
       {
         language ? (
-          <div className={classes.children}>{props.children}</div>
+          <LanguageContext.Provider value={language}>
+            <div className={classes.children}>{props.children}</div>
+          </LanguageContext.Provider>
+          
         ) : <SelectLanguage setLanguage={setLanguage} />
       }
 
