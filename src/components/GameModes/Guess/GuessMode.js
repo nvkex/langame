@@ -1,11 +1,145 @@
 import React, { useEffect, useState } from 'react'
+import { createUseStyles, useTheme } from 'react-jss';
 import ImageCard1 from '../../../common/Cards/ImageCard1';
 import Overlay1 from '../../../common/Overlays/Overlay1';
 import { DEFAULT_LANGUAGE, MAX_SCORE, MAX_STAGE, TIME_LIMIT } from '../../../constants';
-import classes from './GuessMode.module.css'
 import { getImages, getRandomObject, getQuotes } from './GuessModeUtils';
 
+const useStyles = createUseStyles({
+  '@keyframes bounce': {
+    [`0%`]: { width: '50px', height: '50px' },
+    [`50%`]: { width: '80px', height: '80px' },
+    [`100%`]: { width: '50px', height: '50px' }
+  },
+  '@media (max-width: 400px)': {
+    optionContainer: {
+      padding: '0rem !important'
+    }
+  },
+
+  h1: {
+    fontWeight: '700 !important',
+    textShadow: '1px 1px 2px #343434, 2px 2px 10px rgba(0, 0, 0, 0.1)'
+  },
+  p: {
+    fontWeight: '600'
+  },
+  button: {
+    fontWeight: '600'
+  },
+  pStyled: {
+    color: ({ theme }) => theme.color2
+  },
+  screenContainer: {
+    color: 'white',
+    minHeight: '90vh',
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    borderRadius: '0 0 10px 10px',
+    boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.3)',
+  },
+
+  objectText: {
+    fontWeight: '600',
+    padding: '2px',
+    backgroundColor: '#c45858',
+    fontSize: '24px',
+    textTransform: 'uppercase',
+    letterSpacing: '2px'
+  },
+
+  optionContainer: {
+    position: 'relative',
+    margin: 'auto',
+    marginTop: '4rem',
+    padding: '0 4rem'
+  },
+
+  status: {
+    fontSize: '20px',
+    padding: '20px',
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+
+  stage: {
+    fontWeight: 600,
+    color: 'black',
+    fontFamily: '"Courier New", Courier, monospace',
+    borderBottom: '2px solid #c45858'
+  },
+  scoreBoard: {
+    fontWeight: 600,
+    color: 'black',
+    fontFamily: '"Courier New", Courier, monospace',
+    borderBottom: '2px solid #c45858'
+  },
+  timer: {
+    fontWeight: 600,
+    color: 'black',
+    fontFamily: '"Courier New", Courier, monospace',
+    borderBottom: '2px solid #c45858'
+  },
+
+  btn: {
+    transition: '0.5s',
+    border: '2px solid white',
+    outline: 'none',
+    borderRadius: '4px',
+    padding: '8px 20px',
+    color: 'white'
+  },
+
+  btnFinal: {
+    backgroundColor: '#5ac988',
+    '&:hover': {
+      backgroundColor: '#18bb5c'
+    }
+  },
+  btnNorm: {
+    backgroundColor: '#c45858',
+    '&:hover': {
+      backgroundColor: '#c02626'
+    }
+  },
+
+
+  stageResult: {
+    margin: 'auto',
+    zIndex: 10,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    '& svg': {
+      margin: '5px',
+      width: '50px',
+      height: '50px',
+      animationName: `$bounce`,
+      animationDuration: '0.6s'
+    },
+    '& p': {
+      fontSize: '20px',
+      textShadow: '1px 0px 6px black'
+    }
+  },
+
+  wordShow: {
+    textDecoration: 'underline',
+    color: 'white',
+    textTransform: 'uppercase'
+  }
+
+})
+
+
 const GuessMode = () => {
+  const theme = useTheme();
+  const classes = useStyles({ theme });
 
   const [keyword, setKeyword] = useState();
   const [word, setWord] = useState({ loading: true, word: null });
@@ -64,7 +198,7 @@ const GuessMode = () => {
         setKeyword({ key: keyObject, index: i, raw: raw })
         countDown();
       });
-      window.scrollTo(0,0);
+      window.scrollTo(0, 0);
     }
 
     // MAX_STAGE will be two more than final stage
@@ -125,7 +259,7 @@ const GuessMode = () => {
             <Overlay1 score={score} restart={restart} />
           ) : (
             <span>
-              <p className="text-center text-muted">If you score a perfect 100, you'll get a
+              <p className={`text-center ${classes.pStyled}`}>If you score a perfect 100, you'll get a
                 <strong>
                   {word.word ? (
                     <span>&nbsp;{word.word.split(" ")[0]} &#128079;</span>
@@ -190,10 +324,10 @@ const GuessMode = () => {
               </div>
 
               <div className="text-center">
-                <p className="text-muted">{timer < 10 ? timer === 0 ? "Loser!" : "Hurry Up!" : "Beware of the options! They're intimidating."}</p>
+                <p className={`${classes.pStyled}`}>{timer < 10 ? timer === 0 ? "Loser!" : "Hurry Up!" : "Beware of the options! They're intimidating."}</p>
               </div>
 
-              <p className="text-muted" style={{ paddingLeft: '12px' }}>
+              <p className={`${classes.pStyled}`} style={{ paddingLeft: '12px' }}>
                 <small>
                   <i>Your {DEFAULT_LANGUAGE.language} is probably trash.</i> &#128078;
                 </small>
