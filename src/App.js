@@ -9,7 +9,7 @@ import { themeConfig } from './data';
 import { ThemeProvider } from 'react-jss';
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   var theme = themeConfig.light;
   if(darkMode){
     theme = themeConfig.dark;
