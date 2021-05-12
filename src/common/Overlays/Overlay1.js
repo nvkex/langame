@@ -53,6 +53,12 @@ const Msg = styled.p`
 color: ${({theme}) => theme.primaryGreen};
 `;
 
+const PStyled = styled.p`
+color: #232741;
+cursor: pointer;
+margin: 12px 0px;
+`
+
 const Overlay1 = (props) => {
     var msg = null;
     if(props.score === MAX_SCORE){
@@ -94,7 +100,9 @@ const Overlay1 = (props) => {
                 }
             </ScoreBox>
 
-            <p className={`mt-4`}>
+            <PStyled onClick={props.showStats}>Show me the stats, am a nerd. <span>&#10148;</span></PStyled>
+
+            <p className={`mt-3`}>
                 <small>
                     <RudeMsg>Probably your highest achievment in life, so take a printout.</RudeMsg> &#128522;
                 </small>
