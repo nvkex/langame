@@ -1,55 +1,59 @@
 import React from 'react'
-import { createUseStyles, useTheme } from 'react-jss';
 import { MAX_SCORE } from '../../constants';
+import styled from 'styled-components'
 
-const useStyles = createUseStyles({
-    overlayContainer: {
-        width: '100%',
-        position: 'relative'
-    },      
-    scoreBox : {
-        borderRadius: '10px',
-        padding: '10px',
-        width: '200px',
-        margin: 'auto',
-        boxShadow: ({theme}) => `0px 0px 14px ${theme.secondaryRed}`
-      },      
-    rudeMsg : {
-        color: ({theme}) => theme.secondary,
-        borderBottom: ({theme}) => `2px solid ${theme.secondary}`
-      },
-    btn : {
-        transition: '0.5s',
-        border: '2px solid white',
-        outline: 'none',
-        borderRadius: '4px',
-        padding: '4px 10px',
-        color: 'white',
-        backgroundColor:'#5ac988',
-        '&:hover' : {
-            backgroundColor: '#18bb5c'
-          }
-      },
-      max:{
-        fontWeight: 700,
-        color: ({theme}) => theme.primaryGreen
-      },
-      norm:{
-        fontWeight: 700,
-        color: ({theme}) => theme.primaryRed
-      },
-      restart:{
-          width: '100%',
-          position: 'absolute'
-      },
-    msg:{
-        color: ({theme}) => theme.primaryGreen
-    }
-})
+
+const OverlayContainer = styled.div`
+width: 100%;
+position: relative;
+`;
+
+const ScoreBox = styled.div`
+border-radius: 10px;
+padding: 10px;
+width: 200px;
+margin: auto;
+box-shadow: ${({theme}) => `0px 0px 14px ${theme.secondaryRed}`};
+`;
+
+const RudeMsg = styled.i`
+color: ${({theme}) => theme.secondary};
+border-bottom: ${({theme}) => `2px solid ${theme.secondary}`};
+`;
+
+const Btn = styled.button`
+transition: 0.5s;
+border: 2px solid white;
+outline: none;
+border-radius: 4px;
+padding: 4px 10px;
+color: white;
+background-color:#5ac988;
+:hover{
+    background-color: #18bb5c;
+}
+`;
+
+const Max = styled.h5`
+font-weight: 700;
+color: ${({theme}) => theme.primaryGreen};
+`;
+
+const Norm = styled.h5`
+font-weight: 700;
+color: ${({theme}) => theme.primaryRed}
+`;
+
+const Restart = styled.div`
+width: 100%;
+position: absolute;
+`;
+
+const Msg = styled.p`
+color: ${({theme}) => theme.primaryGreen};
+`;
 
 const Overlay1 = (props) => {
-    const theme = useTheme();
-    const classes = useStyles({theme});
     var msg = null;
     if(props.score === MAX_SCORE){
         msg = (<span>Alright! Alright! Nothing fancy. &#128530;</span>)
@@ -59,34 +63,48 @@ const Overlay1 = (props) => {
     }
 
     return (
-        <div className={`text-center ${classes.overlayContainer}`}>
+        <OverlayContainer className={`text-center`}>
             <h3 className="text-dark">
                 in <i><span style={{textDecoration: 'underline'}}>{props.language.lang}</span></i>
             </h3>
-            <p className={classes.msg}>{msg}</p>
-            <div className={`${classes.scoreBox}`}>
+            <Msg>{msg}</Msg>
+            <ScoreBox>
                 <h5 className="text-dark">You scored</h5>
-                <h5 className={props.score === MAX_SCORE ? classes.max : classes.norm}>
-                    {
-                        props.score === MAX_SCORE ? 
-                        <span>&#128561; {props.score}/{MAX_SCORE} &#128561;</span>
-                        : 
-                        <span>&#128169; {props.score}/{MAX_SCORE} &#128169;</span>
-                    }                    
-                </h5>
-            </div>
+                {props.score === MAX_SCORE ? 
+                    (
+                        <Max>
+                            {
+                                props.score === MAX_SCORE ? 
+                                <span>&#128561; {props.score}/{MAX_SCORE} &#128561;</span>
+                                : 
+                                <span>&#128169; {props.score}/{MAX_SCORE} &#128169;</span>
+                            }                    
+                        </Max>
+                    )
+                    : (
+                        <Norm>
+                            {
+                                props.score === MAX_SCORE ? 
+                                <span>&#128561; {props.score}/{MAX_SCORE} &#128561;</span>
+                                : 
+                                <span>&#128169; {props.score}/{MAX_SCORE} &#128169;</span>
+                            }                    
+                        </Norm>
+                    )
+                }
+            </ScoreBox>
 
             <p className={`mt-4`}>
                 <small>
-                    <i className= {classes.rudeMsg}>Probably your highest achievment in life, so take a printout.</i> &#128522;
+                    <RudeMsg>Probably your highest achievment in life, so take a printout.</RudeMsg> &#128522;
                 </small>
             </p>
 
-            <div className={` text-center ${classes.restart}`}>
+            <Restart className={`text-center`}>
                 <p className="mt-4 text-dark">Embarass yourself again??</p>
-                <button to="/guess" className={classes.btn} onClick={props.restart}>Let's Go!!</button>
-            </div>
-        </div>
+                <Btn to="/guess" onClick={props.restart}>Let's Go!!</Btn>
+            </Restart>
+        </OverlayContainer>
     )
 }
 

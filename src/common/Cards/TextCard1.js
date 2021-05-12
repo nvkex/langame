@@ -1,24 +1,21 @@
 import React from 'react'
-import { createUseStyles } from 'react-jss';
+import styled from 'styled-components'
 
-const useStyles = createUseStyles({
-  textCard: {
-    backgroundColor: 'white',
-    color: 'black',
-    padding: '16px 10px',
-    borderRadius: '10px',
-    margin: '4px 0',
-    cursor: 'pointer',
-    fontWeight: 700,
-  }
-});
+const TextCard = styled.div`
+background-color: white;
+color: black;
+padding: 16px 10px;
+border-radius: 10px;
+margin: 4px 0;
+cursor: pointer;
+font-weight: 700;
+`;
 
 const TextCard1 = (props) => {
-  const classes = useStyles();
   return (
-    <div className={`text-center ${classes.textCard}`}>
+    <TextCard className={`text-center`}>
       {props.text}
-    </div>
+    </TextCard>
   )
 }
 

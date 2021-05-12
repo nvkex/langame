@@ -1,24 +1,26 @@
 import React from 'react'
 import Logo from '../Logo'
-import { createUseStyles } from 'react-jss';
+import styled from 'styled-components'
 
-const useStyles = createUseStyles({
-    appDescription:{
-        padding: '4px',
-        backgroundColor: '#18bb5c',
-        maxWidth: '500px',
-        margin: 'auto',
-        fontWeight: 700,
-    }
-});
+const AppDescription = styled.p`
+padding: 4px;
+background-color: #18bb5c;
+max-width: 500px;
+margin: auto;
+font-weight: 700;
+`;
+
+const H4 = styled.h4`
+font-weight: 900 !important;
+text-shadow: 1px 1px 2px #343434, 2px 2px 10px rgba(0, 0, 0, 0.3);
+`;
 
 const AppInfo = () => {
-    const classes = useStyles();
         return (
             <div className="container">
                 <Logo width={'60px'} />
-                <h4 className="display-3 text-center text-light">The Langame</h4>
-                <p className={`text-center text-light ${classes.appDescription}`}>A very offensive way to learn and boost language skills</p>
+                <H4 className="display-3 text-center text-light">The Langame</H4>
+                <AppDescription className={`text-center text-light`}>A very offensive way to learn and boost language skills</AppDescription>
             </div>
         )
     }

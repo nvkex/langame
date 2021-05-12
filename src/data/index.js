@@ -41,7 +41,8 @@ export const themeConfig = {
         primaryRed: '#fc6d6d',
         secondaryRed: '#fc1b1b',
         primaryGreen: '#99f4be',
-        secondaryGreen: '#18bb5c'
+        secondaryGreen: '#18bb5c',
+        backgroundColor: '#232741'
     },
     light: {
         color: 'white',
@@ -50,6 +51,7 @@ export const themeConfig = {
         primaryRed: '#c02626',
         secondaryRed: '#c45858',
         primaryGreen: '#198754 ',
-        secondaryGreen: '#18bb5c'
+        secondaryGreen: '#18bb5c',
+        backgroundImage: 'linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%)'
     }
 }
