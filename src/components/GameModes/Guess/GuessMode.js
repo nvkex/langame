@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import styled, { keyframes } from 'styled-components';
 import ImageCard1 from '../../../common/Cards/ImageCard1';
 import Overlay1 from '../../../common/Overlays/Overlay1';
-import {  MAX_SCORE, MAX_STAGE, TIME_LIMIT } from '../../../constants';
+import { MAX_SCORE, MAX_STAGE, TIME_LIMIT } from '../../../constants';
 import LanguageContext from '../../../containers/LanguageContext';
 import { getImages, getRandomObject, getQuotes } from './GuessModeUtils';
 
@@ -100,6 +100,10 @@ ${({ btnNorm }) => btnNorm && `
       background-color: #c02626;
     }
 `}
+${({ btnDisabled }) => btnDisabled && `
+    cursor: no-drop;
+`}
+
 `;
 
 const StageResult = styled.div`
@@ -146,7 +150,25 @@ const GuessMode = () => {
   const [stopWatch, setStopWatch] = useState();
   const [check, setCheck] = useState({ show: false, match: false });
   const [finished, setFinished] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const [stats, setStats] = useState({
+    show: false,
+    responseTime: [],
+    stageScore: [],
+    stageKeyword: []
+  })
   const lan = useContext(LanguageContext);
+
+
+  const updateStats = (score) => {
+    setStats(stats => {
+      return {
+        stageScore: [...stats.stageScore, score],
+        responseTime: [...stats.responseTime, TIME_LIMIT - timer],
+        stageKeyword: [...stats.stageKeyword, keyword.key]
+      }
+    })
+  }
 
   /**
    * Stops the timer and checks if user has clicked on the correct image.
@@ -156,11 +178,14 @@ const GuessMode = () => {
   const checkImage = (index) => {
     if (index === keyword.index) {
       setScore(s => s + (MAX_SCORE / (MAX_STAGE - 2)));
+      updateStats(MAX_SCORE / (MAX_STAGE - 2));
       setCheck({ show: true, match: true });
     }
     else {
+      updateStats(0);
       setCheck({ show: true, match: false });
     }
+
     clearInterval(stopWatch);
   }
 
@@ -214,6 +239,7 @@ const GuessMode = () => {
   // Clear interval when the time runs out.
   if (timer <= 0 && !check.show) {
     setCheck({ show: true, match: false });
+    updateStats(0);
     clearInterval(stopWatch);
   }
 
@@ -251,7 +277,12 @@ const GuessMode = () => {
         <h1 className="text-center display-4">Guess the object</h1>
         {
           finished ? (
-            <Overlay1 score={score} restart={restart} language={lan}/>
+            <Overlay1
+              score={score}
+              restart={restart}
+              language={lan}
+              showStats={() => setStats(stats => { return { ...stats, show: !stats.show } })}
+            />
           ) : (
             <span>
               <PStyled className={`text-center`}>If you score a perfect 100, you'll get a
@@ -301,7 +332,13 @@ const GuessMode = () => {
               </OptionContainer>
 
               <div className="text-center mt-2">
-                <Btn onClick={nextStage} btnFinal={stage === MAX_STAGE - 2} btnNorm={stage !== MAX_STAGE - 2}>
+                <Btn 
+                onClick={nextStage} 
+                btnFinal={stage === MAX_STAGE - 2} 
+                btnNorm={stage !== MAX_STAGE - 2} 
+                disabled={keyword ? false : true}
+                btnDisabled ={keyword ? false : true}
+                >
                   {stage === MAX_STAGE - 2 ? 'Finish' : 'Next'}
                 </Btn>
               </div>
