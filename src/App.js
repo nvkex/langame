@@ -1,44 +1,45 @@
 import { Route, Switch } from 'react-router';
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import './App.css';
 import LandingPage from './components/LandingPage/LandingPage';
 import ModeContainer from './containers/ModeContainer';
 import GuessMode from './components/GameModes/Guess/GuessMode';
 import LearnMode from './components/GameModes/Learn/LearnMode';
 import { useState } from 'react';
+import Mahjong from './components/GameModes/Mahjong/Mahjong';
 import { themeConfig } from './data';
-import { ThemeProvider } from 'react-jss';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: ${({ theme }) => theme.backgroundColor ? theme.backgroundColor : 'inherit'};
+    background-image: ${({ theme }) => theme.backgroundImage ? theme.backgroundImage : 'inherit'};
+  }
+`;
 
 function App() {
-  // eslint-disable-next-line no-unused-vars
   const [darkMode, setDarkMode] = useState(true);
-  var theme = themeConfig.light;
-  if(darkMode){
-    theme = themeConfig.dark;
-  }
+
   return (
     <div>
-      <ThemeProvider theme={theme}>
-        <Switch>
+      {/* <ThemeContext.Provider value={darkMode}> */}
+      <ThemeProvider theme={darkMode ? themeConfig.dark : themeConfig.light}>
+        <GlobalStyle/>
+          <Switch>
 
-          <Route exact path="/" component={LandingPage} />
-          <ModeContainer>
-            <Switch>
-              <Route exact path="/guess" component={GuessMode} />
-              <Route exact path="/learn" component={LearnMode} />
-            </Switch>
-          </ModeContainer>
+            <Route exact path="/" component={LandingPage} />
+            <ModeContainer setDarkMode={setDarkMode} dark={darkMode}>
+              <Switch>
+                <Route exact path="/guess" component={GuessMode} />
+                <Route exact path="/learn" component={LearnMode} />
+                <Route exact path="/mahjong" component={Mahjong} />
+              </Switch>
+            </ModeContainer>
 
-        </Switch>
+          </Switch>
       </ThemeProvider>
+      {/* </ThemeContext.Provider> */}
     </div >
   );
 }
 
 export default App;
-
-
-/*
-https://picsum.photos/
-https://portal.clarifai.com/users/j8vnv4pavgbw/apps/4d00ea9a8e5c46d794705a4fb30f7aa2/model-mode
-https://github.com/Clarifai/clarifai-nodejs-grpc
-*/
