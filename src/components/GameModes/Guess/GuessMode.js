@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styled, { keyframes } from 'styled-components';
+import RoundStats from '../../../common/RoundStats'
 import ImageCard1 from '../../../common/Cards/ImageCard1';
 import Overlay1 from '../../../common/Overlays/Overlay1';
 import { MAX_SCORE, MAX_STAGE, TIME_LIMIT } from '../../../constants';
@@ -276,96 +277,99 @@ const GuessMode = () => {
       <ScreenContainer>
         <h1 className="text-center display-4">Guess the object</h1>
         {
-          finished ? (
-            <Overlay1
-              score={score}
-              restart={restart}
-              language={lan}
-              showStats={() => setStats(stats => { return { ...stats, show: !stats.show } })}
-            />
-          ) : (
-            <span>
-              <PStyled className={`text-center`}>If you score a perfect 100, you'll get a
+          finished ?
+            stats.show ? (
+              <RoundStats stats={stats} />
+            ) : (
+              <Overlay1
+                score={score}
+                restart={restart}
+                language={lan}
+                showStats={() => setStats(stats => { return { ...stats, show: !stats.show } })}
+              />
+            ) : (
+              <span>
+                <PStyled className={`text-center`}>If you score a perfect 100, you'll get a
                 <strong>
-                  {word.word ? (
-                    <span>&nbsp;{word.word.split(" ")[0]} &#128079;</span>
-                  ) : ' umm..'}
-                </strong>!
+                    {word.word ? (
+                      <span>&nbsp;{word.word.split(" ")[0]} &#128079;</span>
+                    ) : ' umm..'}
+                  </strong>!
               </PStyled>
-              <ObjectText className={`my-4 text-center`}>
-                {keyword ? keyword.key : (<span style={{ color: '#ffb7b7' }}>Thinking...</span>)}
-              </ObjectText>
+                <ObjectText className={`my-4 text-center`}>
+                  {keyword ? keyword.key : (<span style={{ color: '#ffb7b7' }}>Thinking...</span>)}
+                </ObjectText>
 
-              <OptionContainer className={`row`}>
-                {
-                  images.images ? (
-                    images.images.map((image, i) => (
-                      <ImageCard1 i={i} image={image} checkImage={checkImage} quotes={quotes} key={`image_card_${i}`} />
-                    ))
-                  ) : null
-                }
-                {
-                  check.show ? (
-                    <StageResult className={`col-lg-12 col-md-12 col-12`}>
-                      {
-                        check.match ? (
-                          <div style={{ color: '#2ecc71' }} className="text-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-                            </svg>
-                            <p><small>{keyword.raw === keyword.key ? 'Well, this was obvious.' : 'Probably Luck!'}</small></p>
-                            <p><WordShow>{keyword.raw}</WordShow> is <WordShow>{keyword.key}</WordShow> in {lan.lang}.</p>
-                          </div>
-                        ) : (
-                          <div style={{ color: '#c02626' }} className="text-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
-                            </svg>
-                            <p>{timer === 0 ? (<span>You kept me waiting for too long! &#128148;</span>) : keyword.raw === keyword.key ? 'Really? You coudn\'t guess this.' : 'Thats a shame!'}</p>
-                            <p><WordShow>{keyword.raw}</WordShow> is <WordShow>{keyword.key}</WordShow> in {lan.lang}.</p>
-                          </div>
-                        )
-                      }
-                    </StageResult>
-                  ) : null
-                }
-              </OptionContainer>
+                <OptionContainer className={`row`}>
+                  {
+                    images.images ? (
+                      images.images.map((image, i) => (
+                        <ImageCard1 i={i} image={image} checkImage={checkImage} quotes={quotes} key={`image_card_${i}`} />
+                      ))
+                    ) : null
+                  }
+                  {
+                    check.show ? (
+                      <StageResult className={`col-lg-12 col-md-12 col-12`}>
+                        {
+                          check.match ? (
+                            <div style={{ color: '#2ecc71' }} className="text-center">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                              </svg>
+                              <p><small>{keyword.raw === keyword.key ? 'Well, this was obvious.' : 'Probably Luck!'}</small></p>
+                              <p><WordShow>{keyword.raw}</WordShow> is <WordShow>{keyword.key}</WordShow> in {lan.lang}.</p>
+                            </div>
+                          ) : (
+                            <div style={{ color: '#c02626' }} className="text-center">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+                              </svg>
+                              <p>{timer === 0 ? (<span>You kept me waiting for too long! &#128148;</span>) : keyword.raw === keyword.key ? 'Really? You coudn\'t guess this.' : 'Thats a shame!'}</p>
+                              <p><WordShow>{keyword.raw}</WordShow> is <WordShow>{keyword.key}</WordShow> in {lan.lang}.</p>
+                            </div>
+                          )
+                        }
+                      </StageResult>
+                    ) : null
+                  }
+                </OptionContainer>
 
-              <div className="text-center mt-2">
-                <Btn 
-                onClick={nextStage} 
-                btnFinal={stage === MAX_STAGE - 2} 
-                btnNorm={stage !== MAX_STAGE - 2} 
-                disabled={keyword ? false : true}
-                btnDisabled ={keyword ? false : true}
-                >
-                  {stage === MAX_STAGE - 2 ? 'Finish' : 'Next'}
-                </Btn>
-              </div>
+                <div className="text-center mt-2">
+                  <Btn
+                    onClick={nextStage}
+                    btnFinal={stage === MAX_STAGE - 2}
+                    btnNorm={stage !== MAX_STAGE - 2}
+                    disabled={keyword ? false : true}
+                    btnDisabled={keyword ? false : true}
+                  >
+                    {stage === MAX_STAGE - 2 ? 'Finish' : 'Next'}
+                  </Btn>
+                </div>
 
-              <Status>
-                <Stage data-toggle="tooltip" data-placement="bottom" title="You're still on this stage?!">
-                  {stage === MAX_STAGE - 2 ? (<span>&#127937;</span>) : (<span>&#128645;</span>)}{stage}
-                </Stage>
-                <Timer data-toggle="tooltip" data-placement="left" title="Yes, am busy. I dont have all day!">
-                  &#8987;{timer}s
+                <Status>
+                  <Stage data-toggle="tooltip" data-placement="bottom" title="You're still on this stage?!">
+                    {stage === MAX_STAGE - 2 ? (<span>&#127937;</span>) : (<span>&#128645;</span>)}{stage}
+                  </Stage>
+                  <Timer data-toggle="tooltip" data-placement="left" title="Yes, am busy. I dont have all day!">
+                    &#8987;{timer}s
                 </Timer>
-                <ScoreBoard data-toggle="tooltip" data-placement="left" title="*In kratos voice*: Boy! Thats a low score.">
-                  {score}&#128142;
+                  <ScoreBoard data-toggle="tooltip" data-placement="left" title="*In kratos voice*: Boy! Thats a low score.">
+                    {score}&#128142;
                 </ScoreBoard>
-              </Status>
+                </Status>
 
-              <div className="text-center">
-                <PStyled>{timer < 10 ? timer === 0 ? "Loser!" : "Hurry Up!" : "Beware of the options! They're intimidating."}</PStyled>
-              </div>
+                <div className="text-center">
+                  <PStyled>{timer < 10 ? timer === 0 ? "Loser!" : "Hurry Up!" : "Beware of the options! They're intimidating."}</PStyled>
+                </div>
 
-              <PStyled style={{ paddingLeft: '12px' }}>
-                <small>
-                  <i>Your {lan.lang} is probably trash.</i> &#128078;
+                <PStyled style={{ paddingLeft: '12px' }}>
+                  <small>
+                    <i>Your {lan.lang} is probably trash.</i> &#128078;
                 </small>
-              </PStyled>
-            </span>
-          )
+                </PStyled>
+              </span>
+            )
         }
       </ScreenContainer>
     </div>
