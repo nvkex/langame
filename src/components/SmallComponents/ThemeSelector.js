@@ -48,7 +48,7 @@ const ThemeTab = styled.div`
 
 const ThemeSelector = (props) => {
     return (
-        <ThemeTab onClick={() => props.setDarkMode(d => !d)}>
+        <ThemeTab onClick={props.setDarkMode}>
             {
                 props.dark ? (
                     <span>
