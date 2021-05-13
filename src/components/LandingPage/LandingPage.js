@@ -42,6 +42,9 @@ align-items: center;
     font-size: 34px;
     letter-spacing: 2px;
 }
+@media (max-width: 768px){
+    font-size: 20px;
+}
 `;
 
 
