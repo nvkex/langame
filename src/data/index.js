@@ -37,21 +37,25 @@ export const themeConfig = {
     dark: {
         color: 'white',
         color2: 'black',
+        primary: "white",
         secondary: '#c6d5e3',
         primaryRed: '#fc6d6d',
         secondaryRed: '#fc1b1b',
         primaryGreen: '#99f4be',
         secondaryGreen: '#18bb5c',
-        backgroundColor: '#232741'
+        backgroundColor: '#232741',
+        head: "#F8EFBA"
     },
     light: {
         color: 'white',
         color2: 'black',
+        primary: "black",
         secondary: '#6c757d',
         primaryRed: '#c02626',
         secondaryRed: '#c45858',
         primaryGreen: '#198754 ',
         secondaryGreen: '#18bb5c',
-        backgroundImage: 'linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%)'
+        backgroundImage: 'linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%)',
+        head: "#58B19F"
     }
 }
