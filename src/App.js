@@ -17,7 +17,13 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-  const [darkMode, setDarkMode] = useState(true);
+  const themeState = JSON.parse(localStorage.getItem("darkMode"));
+  const [darkMode, setDarkMode] = useState(themeState);
+
+  const setThemeStatus = () => {
+    localStorage.setItem("darkMode", !darkMode);
+    setDarkMode(t => !t);
+  }
 
   return (
     <div>
@@ -27,7 +33,7 @@ function App() {
           <Switch>
 
             <Route exact path="/" component={LandingPage} />
-            <ModeContainer setDarkMode={setDarkMode} dark={darkMode}>
+            <ModeContainer setDarkMode={setThemeStatus} dark={darkMode}>
               <Switch>
                 <Route exact path="/guess" component={GuessMode} />
                 <Route exact path="/learn" component={LearnMode} />
