@@ -41,7 +41,10 @@ const ImageCard1 = (props) => {
     return (
         <div className="col-lg-3 col-md-6">
             <Card onClick={() => props.checkImage(props.i)}>
-                <img src={props.image} alt={`option_${props.i}`} className={`img-fluid`} />
+                <img src={props.image}
+                    alt={`option_${props.i}`}
+                    className={`img-fluid`}
+                    style={{ backgroundImage: "url(\"./assets/images/img-loading.jpg\")", backgroundSize: "contain" }} />
                 <CardQuote className={`text-center`}>{props.quotes[props.i]}</CardQuote>
             </Card>
         </div>
