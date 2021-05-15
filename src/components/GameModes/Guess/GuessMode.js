@@ -166,7 +166,7 @@ const GuessMode = () => {
       return {
         stageScore: [...stats.stageScore, score],
         responseTime: [...stats.responseTime, TIME_LIMIT - timer],
-        stageKeyword: [...stats.stageKeyword, keyword.key]
+        stageKeyword: [...stats.stageKeyword, [keyword.key, keyword.raw]]
       }
     })
   }
@@ -207,6 +207,9 @@ const GuessMode = () => {
  * Refreshes all Game components
  */
   const nextStage = () => {
+    if(!check.show){
+      updateStats(-1);
+    }
     clearInterval(stopWatch);
     if (stage === MAX_STAGE - 2) {
       setFinished(true)
