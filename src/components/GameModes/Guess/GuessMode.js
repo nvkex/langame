@@ -307,7 +307,7 @@ const GuessMode = () => {
                   {
                     images.images ? (
                       images.images.map((image, i) => (
-                        <ImageCard1 i={i} image={image} checkImage={checkImage} quotes={quotes} key={`image_card_${i}`} />
+                        <ImageCard1 i={i} image={image} checkImage={keyword ? checkImage : () => {}} quotes={quotes} key={`image_card_${i}`} />
                       ))
                     ) : null
                   }
